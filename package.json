@@ -1,0 +1,14 @@
+{
+  "name": "axebot",
+  "version": "1.0.0",
+  "description": "feel the axe of axe",
+  "main": "axebot.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "rla",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^10.0.1"
+  }
+}
