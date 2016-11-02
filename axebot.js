@@ -8,10 +8,10 @@ bot.on('ready', () => {
 });
 
 const responseObject = {
-  test: 'FEEL THE AXE OF AXE!',
-  help: 'AXE CAN\'T HELP **YOU**!',
-  dota: 'DOTA IS A SHITTY GAME FOR ASSHOLES',
-  commands: '**!ask** - AXE ME A QUESTION!'
+  'test': 'FEEL THE AXE OF AXE!',
+  'help': 'AXE CAN\'T HELP **YOU**!',
+  'dota': 'DOTA IS A SHITTY GAME FOR ASSHOLES',
+  'commands': '**!ask** - AXE ME A QUESTION!'
 };
 
 bot.on('message', msg => {
@@ -33,6 +33,14 @@ bot.on('message', msg => {
     msg.channel.sendMessage('DOTA IS A SHITTY GAME FOR ASSHOLES');
   }
 
+  else if (msg.content.startsWith(prefix + 'commands')) {
+    msg.channel.sendMessage('**!ask** -- AXE ME A QUESTION!');
+  }
+
+  else if (msg.content.startsWith(prefix + 'ask')) {
+    msg.channel.sendMessage('AXE CAN\'T DO THAT YET!!!');
+  }
+  
 });
 
 bot.on('error', e => console.error(e));
