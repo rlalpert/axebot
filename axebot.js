@@ -7,12 +7,28 @@ bot.on('ready', () => {
   console.log('AXE IS READY');
 });
 
-const responseObject = {
-  'test': 'FEEL THE AXE OF AXE!',
-  'help': 'AXE CAN\'T HELP **YOU**!',
-  'dota': 'DOTA IS A SHITTY GAME FOR ASSHOLES',
-  'commands': '**!ask** - AXE ME A QUESTION!'
-};
+const magicAxeBallAnswers = [
+  'YES, AXE KILLS YOU!',
+  'AXE-ACTLY!',
+  'YOU MIGHT HAVE BEEN A FANCYMAN IN HEAVEN, BUT DOWN HERE YOU ARE NOTHING NEXT TO AXE!',
+  'AXE THINKS SO!',
+  'HAH HAH HAH!',
+  'AS AXE SEES IT, YES!',
+  'AXE THINKS IT\'S LIKELY!',
+  'AXE HAS NO TIME FOR SUCH NONSENSE',
+  'YES',
+  'MY AXE POINTS TO **YES**',
+  'AXE IS HAZY! TRY AGAIN!',
+  'AXE ME THAT LATER!',
+  'AXE CAN\'T TELL YOU THAT!',
+  'WHEN THE TIME IS RIGHT!',
+  'SHITTY WIZARD!',
+  'YOU GET NOTHING!',
+  'NO!',
+  'NOT THIS TIME!',
+  'YOU FOUGHT BADLY - DIED WORSE!',
+  'CUT AND RUN!'
+];
 
 bot.on('message', msg => {
 
@@ -38,9 +54,16 @@ bot.on('message', msg => {
   }
 
   else if (msg.content.startsWith(prefix + 'ask')) {
-    msg.channel.sendMessage('AXE CAN\'T DO THAT YET!!!');
+    let num = Math.floor(Math.random()*magicAxeBallAnswers.length);
+
+    if (msg.content.split(' ').length > 1) {
+      msg.channel.sendMessage(magicAxeBallAnswers[num]);
+    }
+    else {
+      msg.reply('YOU DIDN\'T AXE A QUESTION, *FOOL*');
+    }
   }
-  
+
 });
 
 bot.on('error', e => console.error(e));
