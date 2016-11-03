@@ -3,64 +3,65 @@ const bot = new Discord.Client();
 
 const TOKEN = require('./token');
 
+const magicAxeBallAnswers = require('./magicAxeBallAnswers');
+
+const Config = {
+  cmdPrefix: '!'
+};
+
+const commands = {
+  'test': {
+    description: 'DO YOU WANT TO KNOW IF I\'M WORKING OR NOT?!',
+    process: function(bot, msg, args) {
+      msg.channel.sendMessage('**OF COURSE** AXE PASSES THE TEST!');
+    }
+  },
+  'axe': {
+    description: 'AXE ME A QUESTION',
+    process: function(bot, msg, args) {
+      let num = Math.floor(Math.random()*magicAxeBallAnswers.length);
+
+      if (msg.content.split(' ').length > 1) {
+        msg.channel.sendMessage(magicAxeBallAnswers[num]);
+      }
+      else {
+        msg.reply('YOU DIDN\'T AXE A QUESTION, *FOOL*');
+      }
+    }
+  },
+  'dota': {
+    description: 'LET ME TELL YOU ABOUT DOTA2',
+    process: function(bot, msg, args) {
+      msg.channel.sendMessage('DOTA IS A SHITTY GAME FOR ASSHOLES');
+    }
+  }
+}
+
 bot.on('ready', () => {
   console.log('AXE IS READY');
 });
 
-const magicAxeBallAnswers = [
-  'YES, AXE KILLS YOU!',
-  'AXE-ACTLY!',
-  'YOU MIGHT HAVE BEEN A FANCYMAN IN HEAVEN, BUT DOWN HERE YOU ARE NOTHING NEXT TO AXE!',
-  'AXE THINKS SO!',
-  'HAH HAH HAH!',
-  'AS AXE SEES IT, YES!',
-  'AXE THINKS IT\'S LIKELY!',
-  'AXE HAS NO TIME FOR SUCH NONSENSE',
-  'YES',
-  'MY AXE POINTS TO **YES**',
-  'AXE IS HAZY! TRY AGAIN!',
-  'AXE ME THAT LATER!',
-  'AXE CAN\'T TELL YOU THAT!',
-  'WHEN THE TIME IS RIGHT!',
-  'SHITTY WIZARD!',
-  'YOU GET NOTHING!',
-  'NO!',
-  'NOT THIS TIME!',
-  'YOU FOUGHT BADLY - DIED WORSE!',
-  'CUT AND RUN!'
-];
-
 bot.on('message', msg => {
 
-  let prefix = '!';
+  if (!msg.author.bot && (msg.content[0] === Config.cmdPrefix)) {
+    let command = msg.content.split(' ')[0].substring(1);
+    let args = msg.content.substring(command.length+2);
 
-  if (!msg.content.startsWith('!')) return;
-  if (msg.author.bot) return;
+    console.log(`Processing ${command} command from ${msg.author}.`);
 
-  if (msg.content.startsWith(prefix + 'test')) {
-    msg.reply('FEEL THE AXE OF AXE!');
-  }
+    let cmd = commands[command];
 
-  else if (msg.content.startsWith(prefix + 'help')) {
-    msg.reply('AXE CAN\'T HELP YOU!');
-  }
-
-  else if (msg.content.startsWith(prefix + 'dota')) {
-    msg.channel.sendMessage('DOTA IS A SHITTY GAME FOR ASSHOLES');
-  }
-
-  else if (msg.content.startsWith(prefix + 'commands')) {
-    msg.channel.sendMessage('**!ask** -- AXE ME A QUESTION!');
-  }
-
-  else if (msg.content.startsWith(prefix + 'ask')) {
-    let num = Math.floor(Math.random()*magicAxeBallAnswers.length);
-
-    if (msg.content.split(' ').length > 1) {
-      msg.channel.sendMessage(magicAxeBallAnswers[num]);
+    if (command == 'help') {
+      for (key in commands) {
+        let str = `**!${key}** -- ${commands[key].description}`;
+        msg.channel.sendMessage(str);
+      }
+    }
+    else if (cmd) {
+      cmd.process(bot, msg, args);
     }
     else {
-      msg.reply('YOU DIDN\'T AXE A QUESTION, *FOOL*');
+      msg.reply('AXE CAN\'T DO THAT!');
     }
   }
 
