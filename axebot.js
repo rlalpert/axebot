@@ -61,7 +61,7 @@ bot.on('message', msg => {
       cmd.process(bot, msg, args);
     }
     else {
-      msg.reply('AXE CAN\'T DO THAT!');
+      msg.reply('AXE CAN\'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO');
     }
   }
 
