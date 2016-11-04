@@ -44,7 +44,7 @@ bot.on('ready', () => {
 bot.on('message', msg => {
 
   if (!msg.author.bot && (msg.content[0] === Config.cmdPrefix)) {
-    let command = msg.content.split(' ')[0].substring(1);
+    let command = msg.content.split(' ')[0].substring(1).toLowerCase();
     let args = msg.content.substring(command.length+2);
 
     console.log(`Processing ${command} command from ${msg.author}.`);
