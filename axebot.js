@@ -10,18 +10,18 @@ const magicAxeBallAnswers = require('./magicAxeBallAnswers');
 
 const Config = {
   cmdPrefix: '!',
-  rollDefault: 'd10'
+  rollDefault: '1d10'
 };
 
 const commands = {
   'test': {
-    description: 'DO YOU WANT TO KNOW IF I\'M WORKING OR NOT?!',
+    description: `DO YOU WANT TO KNOW IF I'M WORKING OR NOT?!`,
     process: function(bot, msg, args) {
       msg.channel.sendMessage('**OF COURSE** AXE PASSES THE TEST!');
     }
   },
   'axe': {
-    description: 'AXE ME A QUESTION',
+    description: `AXE ME A QUESTION`,
     process: function(bot, msg, args) {
       let num = Math.floor(Math.random()*magicAxeBallAnswers.length);
 
@@ -29,41 +29,51 @@ const commands = {
         msg.channel.sendMessage(magicAxeBallAnswers[num]);
       }
       else {
-        msg.reply('YOU DIDN\'T AXE A QUESTION, *FOOL*');
+        msg.reply(`YOU DIDN'T AXE A QUESTION, *FOOL*`);
       }
     }
   },
   'dota': {
-    description: 'LET ME TELL YOU ABOUT DOTA2',
+    description: `LET ME TELL YOU ABOUT DOTA2`,
     process: function(bot, msg, args) {
       msg.channel.sendMessage('DOTA IS A SHITTY GAME FOR ASSHOLES');
     }
   },
   'roll': {
-    description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE\'S DIGNITY!**`,
+    description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE'S DIGNITY!**`,
     process: function(bot, msg, args) {
       let rollArgs = args.toLowerCase().split(' ');
       let normalizedRoll = '';
+      let theseFucksAreTryingToCrashMe = false;
 
       rollArgs.forEach((arg) => {
+        if (arg.length > 7) {
+          theseFucksAreTryingToCrashMe = true;
+          return;
+        }
         normalizedRoll+=arg;
       });
 
-      if (!args) {
-        msg.reply(`YOU ROLLED ${roll.roll(Config.rollDefault).result}`);
-      }
-      else if (!roll.validate(normalizedRoll)) {
-        msg.reply(`**${args.toUpperCase()}** ISN'T SOMETHING YOU CAN ROLL, FANCYMAN!`);
+      if (!theseFucksAreTryingToCrashMe) {
+        if (!args) {
+          msg.reply(`YOU ROLLED ${roll.roll(Config.rollDefault).result} OUT OF ${Config.rollDefault}`);
+        }
+        else if (!roll.validate(normalizedRoll)) {
+          msg.reply(`**${args.toUpperCase()}** ISN'T SOMETHING YOU CAN ROLL, FANCYMAN!`);
+        }
+        else {
+          let finishedRoll = roll.roll(normalizedRoll);
+          let resultsArray = finishedRoll.rolled;
+          if (finishedRoll.rolled.length < 500) {
+            msg.reply(`YOU ROLLED ${finishedRoll.result} - *(${resultsArray})*`);
+          } 
+          else {
+            msg.reply(`YOU ROLLED ${finishedRoll.result} - *AXE CAN'T SHOW THAT MANY ROLLS!*`);
+          }
+        } 
       }
       else {
-        let finishedRoll = roll.roll(normalizedRoll);
-        let resultsArray = finishedRoll.rolled;
-        if (finishedRoll.rolled.length < 500) {
-          msg.reply(`YOU ROLLED ${finishedRoll.result} - *(${resultsArray})*`);
-        } 
-        else {
-          msg.reply(`YOU ROLLED ${finishedRoll.result} - *AXE CAN'T SHOW THIS MANY ROLLS!*`);
-        }
+        msg.reply(`ARE YOU *TRYING* TO BREAK THE AXE OF **AXE**!?`);
       }
     }
   }
@@ -100,7 +110,7 @@ bot.on('message', msg => {
       }
     }
     else {
-      msg.reply('AXE CAN\'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO');
+      msg.reply(`AXE CAN'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO`);
     }
   }
 
