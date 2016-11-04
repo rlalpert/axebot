@@ -1,12 +1,12 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const DiceRoll = require('roll');
+const responses = require('./responses');
+const util = require('./utility_functions');
 
 const roll = new DiceRoll();
 
 const TOKEN = require('./token');
-
-const magicAxeBallAnswers = require('./magicAxeBallAnswers');
 
 const Config = {
   cmdPrefix: '!',
@@ -23,7 +23,8 @@ const commands = {
   'axe': {
     description: `AXE ME A QUESTION`,
     process: function(bot, msg, args) {
-      let num = Math.floor(Math.random()*magicAxeBallAnswers.length);
+      let magicAxeBallAnswers = responses.magicAxeBallAnswers;
+      let num = util.randomNumber(magicAxeBallAnswers.length);
 
       if (msg.content.split(' ').length > 1) {
         msg.channel.sendMessage(magicAxeBallAnswers[num]);
