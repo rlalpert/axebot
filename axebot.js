@@ -3,10 +3,11 @@ const bot = new Discord.Client();
 const DiceRoll = require('roll');
 const responses = require('./responses');
 const util = require('./utility_functions');
+const secret = require('./secret.js');
 
 const roll = new DiceRoll();
 
-const TOKEN = require('./token');
+const TOKEN = secret.botToken;
 
 const Config = {
   cmdPrefix: '!',
@@ -17,7 +18,7 @@ const commands = {
   'test': {
     description: `DO YOU WANT TO KNOW IF I'M WORKING OR NOT?!`,
     process: function(bot, msg, args) {
-      msg.channel.sendMessage('**OF COURSE** AXE PASSES THE TEST!');
+      msg.channel.sendMessage(`**OF COURSE** AXE PASSES THE TEST! ${bot.emojis.get('230337386557603842')}`);
     }
   },
   'axe': {
@@ -76,6 +77,17 @@ const commands = {
       else {
         msg.reply(`ARE YOU *TRYING* TO BREAK THE AXE OF **AXE**!?`);
       }
+    }
+  },
+  'emojis': {
+    description: `LIST SERVER EMOJIS`,
+    process: function(bot, msg, args) {
+      let emojis = bot.emojis;
+      let list = '';
+      emojis.forEach((emoji) => {
+        list += `${emoji} -- ${emoji.id}\n`;
+      });
+      msg.channel.sendMessage(list);
     }
   }
 }
