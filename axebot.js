@@ -45,7 +45,9 @@ const commands = {
       let rollArgs = args.toLowerCase().split(' ');
       let normalizedRoll = '';
 
-      rollArgs.forEach((arg) => normalizedRoll+=arg);
+      rollArgs.forEach((arg) => {
+        normalizedRoll+=arg;
+      });
 
       if (!args) {
         msg.reply(`YOU ROLLED ${roll.roll(Config.rollDefault).result}`);
@@ -55,7 +57,13 @@ const commands = {
       }
       else {
         let finishedRoll = roll.roll(normalizedRoll);
-        msg.reply(`YOU ROLLED ${finishedRoll.result} - *(${finishedRoll.rolled})*`);
+        let resultsArray = finishedRoll.rolled;
+        if (finishedRoll.rolled.length < 500) {
+          msg.reply(`YOU ROLLED ${finishedRoll.result} - *(${resultsArray})*`);
+        } 
+        else {
+          msg.reply(`YOU ROLLED ${finishedRoll.result} - *AXE CAN'T SHOW THIS MANY ROLLS!*`);
+        }
       }
     }
   }
