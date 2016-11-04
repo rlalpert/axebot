@@ -1,12 +1,14 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const d20 = require('d20');
 
 const TOKEN = require('./token');
 
 const magicAxeBallAnswers = require('./magicAxeBallAnswers');
 
 const Config = {
-  cmdPrefix: '!'
+  cmdPrefix: '!',
+  rollDefault: 10
 };
 
 const commands = {
@@ -34,6 +36,17 @@ const commands = {
     process: function(bot, msg, args) {
       msg.channel.sendMessage('DOTA IS A SHITTY GAME FOR ASSHOLES');
     }
+  },
+  'roll': {
+    description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE\'S DIGNITY!**`,
+    process: function(bot, msg, args) {
+      if (!args) {
+        msg.reply(`YOU ROLLED ${d20.roll(Config.rollDefault)}`);
+      }
+      else {
+        msg.reply(`YOU ROLLED ${d20.roll(args)}`);
+      }
+    }
   }
 }
 
@@ -52,13 +65,20 @@ bot.on('message', msg => {
     let cmd = commands[command];
 
     if (command == 'help') {
+      let str = '';
       for (key in commands) {
-        let str = `**!${key}** -- ${commands[key].description}`;
-        msg.channel.sendMessage(str);
+        str += `**!${key}** -- ${commands[key].description}\n`;
       }
+      msg.channel.sendMessage(str);
     }
     else if (cmd) {
-      cmd.process(bot, msg, args);
+      try {
+        cmd.process(bot, msg, args);
+      }
+      catch (e) {
+        msg.reply(`*I'm sorry, I can't do that, Dave...*`);
+        console.log(`There was an error ${e} processing ${command} command from ${msg.author}.`);
+      }
     }
     else {
       msg.reply('AXE CAN\'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO');
