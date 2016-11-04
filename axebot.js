@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const d20 = require('d20');
+const DiceRoll = require('roll');
+
+const roll = new DiceRoll();
 
 const TOKEN = require('./token');
 
@@ -8,7 +10,7 @@ const magicAxeBallAnswers = require('./magicAxeBallAnswers');
 
 const Config = {
   cmdPrefix: '!',
-  rollDefault: 10
+  rollDefault: 'd10'
 };
 
 const commands = {
@@ -40,11 +42,20 @@ const commands = {
   'roll': {
     description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE\'S DIGNITY!**`,
     process: function(bot, msg, args) {
+      let rollArgs = args.toLowerCase().split(' ');
+      let normalizedRoll = '';
+
+      rollArgs.forEach((arg) => normalizedRoll+=arg);
+
       if (!args) {
-        msg.reply(`YOU ROLLED ${d20.roll(Config.rollDefault)}`);
+        msg.reply(`YOU ROLLED ${roll.roll(Config.rollDefault).result}`);
+      }
+      else if (!roll.validate(normalizedRoll)) {
+        msg.reply(`**${args.toUpperCase()}** ISN'T SOMETHING YOU CAN ROLL, FANCYMAN!`);
       }
       else {
-        msg.reply(`YOU ROLLED ${d20.roll(args)}`);
+        let finishedRoll = roll.roll(normalizedRoll);
+        msg.reply(`YOU ROLLED ${finishedRoll.result} - *(${finishedRoll.rolled})*`);
       }
     }
   }
@@ -77,7 +88,7 @@ bot.on('message', msg => {
       }
       catch (e) {
         msg.reply(`*I'm sorry, I can't do that, Dave...*`);
-        console.log(`There was an error ${e} processing ${command} command from ${msg.author}.`);
+        console.log(`There was an error -- ${e} -- processing ${command} command from ${msg.author}.`);
       }
     }
     else {

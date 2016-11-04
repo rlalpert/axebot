@@ -9,7 +9,7 @@
   "author": "rla",
   "license": "ISC",
   "dependencies": {
-    "d20": "^1.4.1",
-    "discord.js": "^10.0.1"
+    "discord.js": "^10.0.1",
+    "roll": "^1.2.0"
   }
 }
