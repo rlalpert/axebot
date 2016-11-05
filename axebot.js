@@ -3,9 +3,7 @@ const bot = new Discord.Client();
 const DiceRoll = require('roll');
 const responses = require('./responses');
 const util = require('./utility_functions');
-const secret = require('./secret.js');
-
-const roll = new DiceRoll();
+const secret = require('./secret');
 
 const TOKEN = secret.botToken;
 
@@ -46,6 +44,7 @@ const commands = {
   'roll': {
     description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE'S DIGNITY!**`,
     process: function(bot, msg, args) {
+      let roll = new DiceRoll();
       let rollArgs = args.toLowerCase().split(' ');
       let normalizedRoll = '';
       let theseFucksAreTryingToCrashMe = false;
