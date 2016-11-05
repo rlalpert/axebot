@@ -25,10 +25,10 @@ const commands = {
     description: `AXE ME A QUESTION`,
     process: function(bot, msg, args) {
       let magicAxeBallAnswers = responses.magicAxeBallAnswers;
-      let num = util.randomNumber(magicAxeBallAnswers.length);
+      let i = util.randomNumber(magicAxeBallAnswers.length);
 
       if (msg.content.split(' ').length > 1) {
-        msg.channel.sendMessage(magicAxeBallAnswers[num]);
+        msg.channel.sendMessage(magicAxeBallAnswers[i]);
       }
       else {
         msg.reply(`YOU DIDN'T AXE A QUESTION, *FOOL*`);
@@ -38,7 +38,9 @@ const commands = {
   'dota': {
     description: `LET ME TELL YOU ABOUT DOTA2`,
     process: function(bot, msg, args) {
-      msg.channel.sendMessage('DOTA IS A SHITTY GAME FOR ASSHOLES');
+      let dotaFeelings = responses.dotaFeelings;
+      let i = util.randomNumber(dotaFeelings.length);
+      msg.channel.sendMessage(dotaFeelings[i]);
     }
   },
   'roll': {
