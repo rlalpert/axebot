@@ -9,6 +9,7 @@
   "author": "rla",
   "license": "ISC",
   "dependencies": {
+    "cleverbot.io": "^1.0.4",
     "discord.js": "^10.0.1",
     "roll": "^1.2.0"
   }

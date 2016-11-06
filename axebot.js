@@ -4,8 +4,11 @@ const DiceRoll = require('roll');
 const responses = require('./responses');
 const util = require('./utility_functions');
 const secret = require('./secret');
+const CleverBotObj = require('cleverbot.io');
 
 const TOKEN = secret.botToken;
+const cleverbot = new CleverBotObj(secret.cleverBotUser, secret.cleverBotApiKey);
+cleverbot.setNick('divinethrows');
 
 const Config = {
   cmdPrefix: '!',
@@ -89,6 +92,22 @@ const commands = {
         list += `${emoji} -- ${emoji.id}\n`;
       });
       msg.channel.sendMessage(list);
+    }
+  },
+  'clever': {
+    description: `AXE IS SKYNET - TEST PHASE IS BUGGY`,
+    process: function(bot, msg, args) {
+      cleverbot.create((err, divinethrows) => {
+        cleverbot.ask(args, (err, response) => {
+          if (!err) {
+            msg.reply(response.toUpperCase());
+          }
+          else {
+            console.log(`Error -- ${err} -- encountered when trying to use Cleverbot.`);
+            msg.reply(`AXE IS HAVING DIFFICULT EMOTIONAL PROBLEMS RIGHT NOW PLEASE TRY SOMETHING ELSE`);
+          }
+        });
+      });
     }
   }
 }
