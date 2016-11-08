@@ -5,8 +5,11 @@ const responses = require('./responses');
 const util = require('./utility_functions');
 const secret = require('./secret');
 const CleverBotObj = require('cleverbot.io');
+const fs = require('fs');
+const dotaMatchParser = require('./dota_match_parser');
 
 const TOKEN = secret.botToken;
+const STEAM_DEVKEY = secret.steamDevKey;
 const cleverbot = new CleverBotObj(secret.cleverBotUser, secret.cleverBotApiKey);
 cleverbot.setNick('divinethrows');
 
@@ -107,6 +110,48 @@ const commands = {
             msg.reply(`AXE IS HAVING DIFFICULT EMOTIONAL PROBLEMS RIGHT NOW PLEASE TRY SOMETHING ELSE`);
           }
         });
+      });
+    }
+  },
+  'register': {
+    description: `GIVE AXE YOUR STEAM ID WITH **!register steamidhere** SO I CAN LAUGH AT YOUR PUNY, TRUMPISH GPM`,
+    process: function(bot, msg, args) {
+      let user = msg.author;
+      if (!args) {
+        msg.reply(`YOU NEED TO GIVE AXE YOUR STEAM ID FOR THAT TO WORK. FOR INSTRUCTIONS, ASK SOMEONE SMARTER.`);
+      }
+      else {
+        let userObject = { "steamid": args };
+        fs.writeFile(`${user}.json`, JSON.stringify(userObject), (err) => {
+          if (err) {
+            msg.channel.sendMessage(`SOMETHING ISN'T WORKING!`);
+            console.log(`Error -- ${err} -- trying to save ${msg.author}'s Steam ID`);
+          }
+          else {
+            msg.reply(`AXE *SAVES*!`);
+          }
+        });
+      }
+    }
+  },
+  'matches': {
+    description: `AXE LAUGHS AT YOUR LAST 5 PITIFUL DOTA MATCHES`,
+    process: function(bot, msg, args) {
+      let user = msg.author;
+      fs.readFile(`${user}.json`, (err, data) => {
+        if (err) {
+          if (err === 'ENOENT') {
+            msg.reply(`AXE NEEDS YOUR STEAM ID. USE **!register** TO FEEL THE AXE OF *AXE*!`);
+          }
+          else {
+            msg.reply(`THIS ISN'T WORKING FOR AXE!`);
+            console.log(`Error -- ${err} -- trying to get match history for ${user}`);
+          }
+        }
+        else {
+          let info = JSON.parse(data);
+          msg.reply(`Your steam id is ${info.steamid}`);
+        }
       });
     }
   }
