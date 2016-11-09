@@ -6,7 +6,8 @@ const util = require('./utility_functions');
 const secret = require('./secret');
 const CleverBotObj = require('cleverbot.io');
 const fs = require('fs');
-const dotaMatchParser = require('./dota_match_parser');
+// const dotaMatchParser = require('./dota_match_parser');
+const request = require('request');
 
 const TOKEN = secret.botToken;
 const STEAM_DEVKEY = secret.steamDevKey;
@@ -144,13 +145,28 @@ const commands = {
             msg.reply(`AXE NEEDS YOUR STEAM ID. USE **!register** TO FEEL THE AXE OF *AXE*!`);
           }
           else {
-            msg.reply(`THIS ISN'T WORKING FOR AXE!`);
+            msg.reply(`THIS ISN'T WORKING FOR AXE! MAKE SURE YOU **!register** YOUR STEAMID`);
             console.log(`Error -- ${err} -- trying to get match history for ${user}`);
           }
         }
         else {
           let info = JSON.parse(data);
-          msg.reply(`Your steam id is ${info.steamid}`);
+          let steamId = info.steamid;
+          request.get(`https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=${secret.steamDevKey}&account_id=${steamId}`, (err, response, body) => {
+              if (err) {
+                console.log(err);
+              }
+              else {
+                let parsedData = JSON.parse(body);
+                let results = parsedData.result.matches;
+                let string = '';
+                for (let i = 0; i < 5; i++) {
+                  string += `http://www.dotabuff.com/matches/${results[i].match_id}\n`;
+                  // console.log(`${results[i].match_id}`);
+                }
+                msg.channel.sendMessage(string);
+              }
+          }); 
         }
       });
     }
