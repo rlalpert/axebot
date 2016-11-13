@@ -8,7 +8,7 @@ I would not recommend using Axebot in its current state as I am still working th
 
 ## However...
 
-If you are looking at Axebot as example code, if you want to see how it runs right now you would need to clone this repo. Then, once you are in that folder, you want to run `npm intall` to install dependencies, then `mkdir data` once you are inside the folder. Then, rename `secret_template.js` to `secret.js` and fill it in with appropriate api keys.
+If you are looking at Axebot as example code, if you want to see how it runs right now you would need to clone this repo. Then, once you are in that folder, you want to run `npm install` to install dependencies, then `mkdir data` once you are inside the folder. Then, rename `secret_template.js` to `secret.js` and fill it in with appropriate api keys.
 
 ## Really, though, don't use this on your Discord server
 
