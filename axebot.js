@@ -123,7 +123,7 @@ const commands = {
       }
       else {
         let userObject = { "steamid": args };
-        fs.writeFile(`${user}.json`, JSON.stringify(userObject), (err) => {
+        fs.writeFile(`./data/${user}.json`, JSON.stringify(userObject), (err) => {
           if (err) {
             msg.channel.sendMessage(`SOMETHING ISN'T WORKING!`);
             console.log(`Error -- ${err} -- trying to save ${msg.author}'s Steam ID`);
@@ -139,13 +139,13 @@ const commands = {
     description: `AXE LAUGHS AT YOUR LAST 5 PITIFUL DOTA MATCHES`,
     process: function(bot, msg, args) {
       let user = msg.author;
-      fs.readFile(`${user}.json`, (err, data) => {
+      fs.readFile(`./data/${user}.json`, (err, data) => {
         if (err) {
-          if (err === 'ENOENT') {
+          if (err.code === 'ENOENT') {
             msg.reply(`AXE NEEDS YOUR STEAM ID. USE **!register** TO FEEL THE AXE OF *AXE*!`);
           }
           else {
-            msg.reply(`THIS ISN'T WORKING FOR AXE! MAKE SURE YOU **!register** YOUR STEAMID`);
+            msg.reply(`THIS ISN'T WORKING FOR AXE!`);
             console.log(`Error -- ${err} -- trying to get match history for ${user}`);
           }
         }
@@ -153,6 +153,7 @@ const commands = {
           let info = JSON.parse(data);
           let steamId = info.steamid;
           request.get(`https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=${secret.steamDevKey}&account_id=${steamId}`, (err, response, body) => {
+              console.log(response.statusCode);
               if (err) {
                 console.log(err);
               }
@@ -162,7 +163,6 @@ const commands = {
                 let string = '';
                 for (let i = 0; i < 5; i++) {
                   string += `http://www.dotabuff.com/matches/${results[i].match_id}\n`;
-                  // console.log(`${results[i].match_id}`);
                 }
                 msg.channel.sendMessage(string);
               }
