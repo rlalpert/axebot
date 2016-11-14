@@ -6,7 +6,7 @@ const bot = new Discord.Client();
 const secret = require('./secret');
 const fs = require('fs');
 const path = require('path');
-const request = require('request');
+// const request = require('request');
 
 const STEAM_DEVKEY = secret.steamDevKey;
 
@@ -35,42 +35,7 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-//   'matches': {
-//     description: `AXE LAUGHS AT YOUR LAST 5 PITIFUL DOTA MATCHES`,
-//     process: function(bot, msg, args) {
-//       let user = msg.author;
-//       fs.readFile(`./data/${user}.json`, (err, data) => {
-//         if (err) {
-//           if (err.code === 'ENOENT') {
-//             msg.reply(`AXE NEEDS YOUR STEAM ID. USE **!register** TO FEEL THE AXE OF *AXE*!`);
-//           }
-//           else {
-//             msg.reply(`THIS ISN'T WORKING FOR AXE!`);
-//             console.log(`Error -- ${err} -- trying to get match history for ${user}`);
-//           }
-//         }
-//         else {
-//           let info = JSON.parse(data);
-//           let steamId = info.steamid;
-//           request.get(`https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=${secret.steamDevKey}&account_id=${steamId}`, (err, response, body) => {
-//               console.log(response.statusCode);
-//               if (err) {
-//                 console.log(err);
-//               }
-//               else {
-//                 let parsedData = JSON.parse(body);
-//                 let results = parsedData.result.matches;
-//                 let string = '';
-//                 for (let i = 0; i < 5; i++) {
-//                   string += `http://www.dotabuff.com/matches/${results[i].match_id}\n`;
-//                 }
-//                 msg.channel.sendMessage(string);
-//               }
-//           }); 
-//         }
-//       });
-//     }
-//   }
+
 // }
 
 bot.on('ready', () => {
