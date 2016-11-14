@@ -39,17 +39,6 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-//   'emojis': {
-//     description: `LIST SERVER EMOJIS`,
-//     process: function(bot, msg, args) {
-//       let emojis = bot.emojis;
-//       let list = '';
-//       emojis.forEach((emoji) => {
-//         list += `${emoji} -- ${emoji.id}\n`;
-//       });
-//       msg.channel.sendMessage(list);
-//     }
-//   },
 //   'clever': {
 //     description: `AXE IS SKYNET - TEST PHASE IS BUGGY`,
 //     process: function(bot, msg, args) {
