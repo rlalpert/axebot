@@ -4,18 +4,15 @@ const bot = new Discord.Client();
 // const responses = require('./responses'); 
 // const util = require('./utility_functions');
 const secret = require('./secret');
-const CleverBotObj = require('cleverbot.io');
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
 
-const TOKEN = secret.botToken;
 const STEAM_DEVKEY = secret.steamDevKey;
-const cleverbot = new CleverBotObj(secret.cleverBotUser, secret.cleverBotApiKey);
+
 
 const Config = require('./config');
 
-cleverbot.setNick(Config.cleverbotNick);
 
 // Reads files in the 'commands' directory
 //  and then returns a 'commands' object that
@@ -39,22 +36,6 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-//   'clever': {
-//     description: `AXE IS SKYNET - TEST PHASE IS BUGGY`,
-//     process: function(bot, msg, args) {
-//       cleverbot.create((err, divinethrows) => {
-//         cleverbot.ask(args, (err, response) => {
-//           if (!err) {
-//             msg.reply(response.toUpperCase());
-//           }
-//           else {
-//             console.log(`Error -- ${err} -- encountered when trying to use Cleverbot.`);
-//             msg.reply(`AXE IS HAVING DIFFICULT EMOTIONAL PROBLEMS RIGHT NOW PLEASE TRY SOMETHING ELSE`);
-//           }
-//         });
-//       });
-//     }
-//   },
 //   'register': {
 //     description: `GIVE AXE YOUR STEAM ID WITH **!register steamidhere** SO I CAN LAUGH AT YOUR PUNY, TRUMPISH GPM`,
 //     process: function(bot, msg, args) {
@@ -153,4 +134,4 @@ bot.on('message', msg => {
 
 bot.on('error', e => console.error(e));
 
-bot.login(TOKEN);
+bot.login(secret.botToken);
