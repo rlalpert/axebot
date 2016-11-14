@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const DiceRoll = require('roll');
+// const DiceRoll = require('roll');
 // const responses = require('./responses'); 
 // const util = require('./utility_functions');
 const secret = require('./secret');
@@ -13,16 +13,12 @@ const TOKEN = secret.botToken;
 const STEAM_DEVKEY = secret.steamDevKey;
 const cleverbot = new CleverBotObj(secret.cleverBotUser, secret.cleverBotApiKey);
 
-const Config = {
-  cmdPrefix: '!',
-  rollDefault: '1d10',
-  cleverbotNick: 'divinethrows'
-};
+const Config = require('./config');
 
 cleverbot.setNick(Config.cleverbotNick);
 
 // Reads files in the 'commands' directory
-//  and then creates a 'commands' object that
+//  and then returns a 'commands' object that
 //  is useable by Axebot.
 function writeCommands() {
   let commands = {};
@@ -43,46 +39,6 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-
-//   'roll': {
-//     description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE'S DIGNITY!**`,
-//     process: function(bot, msg, args) {
-//       let roll = new DiceRoll();
-//       let rollArgs = args.toLowerCase().split(' ');
-//       let normalizedRoll = '';
-//       let theseFucksAreTryingToCrashMe = false;
-
-//       rollArgs.forEach((arg) => {
-//         if (arg.length > 7) {
-//           theseFucksAreTryingToCrashMe = true;
-//           return;
-//         }
-//         normalizedRoll+=arg;
-//       });
-
-//       if (!theseFucksAreTryingToCrashMe) {
-//         if (!args) {
-//           msg.reply(`YOU ROLLED ${roll.roll(Config.rollDefault).result} OUT OF ${Config.rollDefault}`);
-//         }
-//         else if (!roll.validate(normalizedRoll)) {
-//           msg.reply(`**${args.toUpperCase()}** ISN'T SOMETHING YOU CAN ROLL, FANCYMAN!`);
-//         }
-//         else {
-//           let finishedRoll = roll.roll(normalizedRoll);
-//           let resultsArray = finishedRoll.rolled;
-//           if (finishedRoll.rolled.length < 500) {
-//             msg.reply(`YOU ROLLED ${finishedRoll.result} - *(${resultsArray})*`);
-//           } 
-//           else {
-//             msg.reply(`YOU ROLLED ${finishedRoll.result} - *AXE CAN'T SHOW THAT MANY ROLLS!*`);
-//           }
-//         } 
-//       }
-//       else {
-//         msg.reply(`ARE YOU *TRYING* TO BREAK THE AXE OF **AXE**!?`);
-//       }
-//     }
-//   },
 //   'emojis': {
 //     description: `LIST SERVER EMOJIS`,
 //     process: function(bot, msg, args) {

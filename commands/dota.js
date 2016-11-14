@@ -5,4 +5,4 @@ module.exports = {
     let i = require('../utility').randomNumber(dotaFeelings.length);
     msg.channel.sendMessage(dotaFeelings[i]);
   }
-}
+};

@@ -11,4 +11,4 @@ module.exports = {
       msg.reply(`YOU DIDN'T AXE A QUESTION, *FOOL*`);
     }
   }
-}
+};
