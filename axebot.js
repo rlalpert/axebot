@@ -10,7 +10,6 @@ const request = require('request');
 
 const STEAM_DEVKEY = secret.steamDevKey;
 
-
 const Config = require('./config');
 
 
@@ -36,27 +35,6 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-//   'register': {
-//     description: `GIVE AXE YOUR STEAM ID WITH **!register steamidhere** SO I CAN LAUGH AT YOUR PUNY, TRUMPISH GPM`,
-//     process: function(bot, msg, args) {
-//       let user = msg.author;
-//       if (!args) {
-//         msg.reply(`YOU NEED TO GIVE AXE YOUR STEAM ID FOR THAT TO WORK. FOR INSTRUCTIONS, ASK SOMEONE SMARTER.`);
-//       }
-//       else {
-//         let userObject = { "steamid": args };
-//         fs.writeFile(`./data/${user}.json`, JSON.stringify(userObject), (err) => {
-//           if (err) {
-//             msg.channel.sendMessage(`SOMETHING ISN'T WORKING!`);
-//             console.log(`Error -- ${err} -- trying to save ${msg.author}'s Steam ID`);
-//           }
-//           else {
-//             msg.reply(`AXE *SAVES*!`);
-//           }
-//         });
-//       }
-//     }
-//   },
 //   'matches': {
 //     description: `AXE LAUGHS AT YOUR LAST 5 PITIFUL DOTA MATCHES`,
 //     process: function(bot, msg, args) {
