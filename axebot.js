@@ -43,14 +43,7 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-//   'dota': {
-//     description: `LET ME TELL YOU ABOUT DOTA2`,
-//     process: function(bot, msg, args) {
-//       let dotaFeelings = responses.dotaFeelings;
-//       let i = util.randomNumber(dotaFeelings.length);
-//       msg.channel.sendMessage(dotaFeelings[i]);
-//     }
-//   },
+
 //   'roll': {
 //     description: `AXE CAN ROLL DND STYLE DICE FOR YOU. **THIS IS BELOW AXE'S DIGNITY!**`,
 //     process: function(bot, msg, args) {
