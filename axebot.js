@@ -22,12 +22,6 @@ const Config = {
 cleverbot.setNick(Config.cleverbotNick);
 
 const commands = {
-  'test': {
-    description: `DO YOU WANT TO KNOW IF I'M WORKING OR NOT?!`,
-    process: function(bot, msg, args) {
-      msg.channel.sendMessage(`**OF COURSE** AXE PASSES THE TEST! ${bot.emojis.get('230337386557603842')}`);
-    }
-  },
   'axe': {
     description: `AXE ME A QUESTION`,
     process: function(bot, msg, args) {
