@@ -1,50 +1,24 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
-// const DiceRoll = require('roll');
-// const responses = require('./responses'); 
-// const util = require('./utility_functions');
 const secret = require('./secret');
-const fs = require('fs');
-const path = require('path');
-// const request = require('request');
+const utility = require('./utility');
 
-const STEAM_DEVKEY = secret.steamDevKey;
+const bot = new Discord.Client();
 
 const Config = require('./config');
-
-
-// Reads files in the 'commands' directory
-//  and then returns a 'commands' object that
-//  is useable by Axebot.
-function writeCommands() {
-  let commands = {};
-  fs.readdir('commands', (err, files) => {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      for (let i = 0; i < files.length; i++) {
-        let fileName = path.parse(files[i]).name;
-        commands[fileName] = require(`./commands/${fileName}`);
-      }
-    }
-  });
-  return commands;
-}
-
-const commands = writeCommands();
-
-// const commands = {
-
-// }
+const commands = utility.writeCommands();
 
 bot.on('ready', () => {
   console.log('AXE IS READY');
 });
 
-bot.on('message', msg => {
+bot.on('message', (msg) => parseMessages(msg));
 
-  if (!msg.author.bot && (msg.content[0] === Config.cmdPrefix)) {
+bot.on('error', e => console.error(e));
+
+bot.login(secret.botToken);
+
+function parseMessages(msg) {
+  if (!msg.author.bot && (msg.content[0] === require('./config').cmdPrefix)) {
     let command = msg.content.split(' ')[0].substring(1).toLowerCase();
     let args = msg.content.substring(command.length+2);
 
@@ -72,9 +46,4 @@ bot.on('message', msg => {
       msg.reply(`AXE CAN'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO`);
     }
   }
-
-});
-
-bot.on('error', e => console.error(e));
-
-bot.login(secret.botToken);
+}
