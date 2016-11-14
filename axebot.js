@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const DiceRoll = require('roll');
-const responses = require('./responses');
-const util = require('./utility_functions');
+// const responses = require('./responses'); 
+// const util = require('./utility_functions');
 const secret = require('./secret');
 const CleverBotObj = require('cleverbot.io');
 const fs = require('fs');
@@ -21,6 +21,9 @@ const Config = {
 
 cleverbot.setNick(Config.cleverbotNick);
 
+// Reads files in the 'commands' directory
+//  and then creates a 'commands' object that
+//  is useable by Axebot.
 function writeCommands() {
   let commands = {};
   fs.readdir('commands', (err, files) => {
@@ -40,20 +43,6 @@ function writeCommands() {
 const commands = writeCommands();
 
 // const commands = {
-//   'axe': {
-//     description: `AXE ME A QUESTION`,
-//     process: function(bot, msg, args) {
-//       let magicAxeBallAnswers = responses.magicAxeBallAnswers;
-//       let i = util.randomNumber(magicAxeBallAnswers.length);
-
-//       if (msg.content.split(' ').length > 1) {
-//         msg.channel.sendMessage(magicAxeBallAnswers[i]);
-//       }
-//       else {
-//         msg.reply(`YOU DIDN'T AXE A QUESTION, *FOOL*`);
-//       }
-//     }
-//   },
 //   'dota': {
 //     description: `LET ME TELL YOU ABOUT DOTA2`,
 //     process: function(bot, msg, args) {
