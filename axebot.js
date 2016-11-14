@@ -12,12 +12,14 @@ const request = require('request');
 const TOKEN = secret.botToken;
 const STEAM_DEVKEY = secret.steamDevKey;
 const cleverbot = new CleverBotObj(secret.cleverBotUser, secret.cleverBotApiKey);
-cleverbot.setNick('divinethrows');
 
 const Config = {
   cmdPrefix: '!',
-  rollDefault: '1d10'
+  rollDefault: '1d10',
+  cleverbotNick: 'divinethrows'
 };
+
+cleverbot.setNick(Config.cleverbotNick);
 
 const commands = {
   'test': {
