@@ -3,8 +3,8 @@ const secret = require('./secret');
 const utility = require('./utility');
 
 const bot = new Discord.Client();
-
 const Config = require('./config');
+
 const commands = utility.writeCommands();
 
 bot.on('ready', () => {
@@ -18,7 +18,7 @@ bot.on('error', e => console.error(e));
 bot.login(secret.botToken);
 
 function parseMessages(msg) {
-  if (!msg.author.bot && (msg.content[0] === require('./config').cmdPrefix)) {
+  if (!msg.author.bot && (msg.content[0] === Config.cmdPrefix)) {
     let command = msg.content.split(' ')[0].substring(1).toLowerCase();
     let args = msg.content.substring(command.length+2);
 
@@ -29,7 +29,7 @@ function parseMessages(msg) {
     if (command == 'help') {
       let str = '';
       for (key in commands) {
-        str += `**!${key}** -- ${commands[key].description}\n`;
+        str += `**${Config.cmdPrefix}${key}** -- ${commands[key].description}\n`;
       }
       msg.channel.sendMessage(str);
     }
