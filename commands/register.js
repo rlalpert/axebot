@@ -4,12 +4,25 @@ module.exports = {
     let fs = require('fs');
     let path = require('path');
     let user = msg.author;
+    let filePath = path.join(__dirname, `../data/${user}.json`);
+
     if (!args) {
-      msg.reply(`YOU NEED TO GIVE AXE YOUR STEAM ID FOR THAT TO WORK. FOR INSTRUCTIONS, ASK SOMEONE SMARTER.`);
+      fs.readFile(filePath, (err, data) => {
+        if (err && err.code === 'ENOENT') { 
+          msg.reply(`YOU NEED TO GIVE AXE YOUR STEAM ID FOR THAT TO WORK! IF YOU NEED HELP, AS SOMEONE SMARTER`); 
+        }
+        else if (!err) {
+          let userObject = JSON.parse(data);
+          if (userObject.steamid) {
+            currentId = userObject.steamid;
+            msg.reply(`AXE ALREADY REGISTERED YOU WITH ${userObject.steamid}`);
+          }
+        }
+      });
     }
     else {
       let userObject = { "steamid": args };
-      let filePath = path.join(__dirname, `../data/${user}.json`);
+      
       fs.writeFile(filePath, JSON.stringify(userObject), (err) => {
         if (err) {
           msg.channel.sendMessage(`SOMETHING ISN'T WORKING!`);
