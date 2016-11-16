@@ -15,8 +15,3 @@ If you are looking at Axebot as example code, if you want to see how it runs rig
 This is a heavy work in progress and is going to change **a lot**. I'll update this readme when it's in a more usable state. 
 
 If you are looking for a plug and play bot, there are others out there in a more complete form.
-
-# Known (Major) Issues
-
-* Crashes when an invalid Steam ID is entered with the **!register** command.
-
