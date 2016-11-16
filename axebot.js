@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const secret = require('./secret');
 const utility = require('./utility');
+const fs = require('fs');
 
 const bot = new Discord.Client();
 const Config = require('./config');
@@ -11,6 +12,8 @@ bot.on('ready', () => {
   console.log('AXE IS READY');
 });
 
+const markovListener = fs.createWriteStream('./data/markov.txt', {flags: 'a'});
+
 bot.on('message', (msg) => parseMessages(msg));
 
 bot.on('error', e => console.error(e));
@@ -18,6 +21,8 @@ bot.on('error', e => console.error(e));
 bot.login(secret.botToken);
 
 function parseMessages(msg) {
+  markovListener.write(`${msg.content}\n`);
+
   if (!msg.author.bot && (msg.content[0] === Config.cmdPrefix)) {
     let command = msg.content.split(' ')[0].substring(1).toLowerCase();
     let args = msg.content.substring(command.length+2);
