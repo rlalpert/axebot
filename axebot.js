@@ -12,7 +12,7 @@ bot.on('ready', () => {
   console.log('AXE IS READY');
 });
 
-const markovListener = fs.createWriteStream('./data/markov.txt', {flags: 'a'});
+// const markovListener = fs.createWriteStream('./data/markov.txt', {flags: 'a'});
 
 bot.on('message', (msg) => parseMessages(msg));
 
@@ -50,8 +50,8 @@ function parseMessages(msg) {
         msg.reply(`AXE CAN'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO`);
       }
     }
-    else {
-      markovListener.write(`${msg.content}\n`);
-    }
+    // else {
+    //   markovListener.write(`${msg.content}\n`);
+    // }
   }
 }
