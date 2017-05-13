@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const secret = require('./secret');
 const utility = require('./utility');
 const fs = require('fs');
+const request = require('request');
 
 const bot = new Discord.Client();
 const Config = require('./config');
@@ -10,15 +11,36 @@ const commands = utility.writeCommands();
 
 bot.on('ready', () => {
   console.log('AXE IS READY');
+  setInterval(postPics, 1000*60*60*24, Config.cutePics.channel, Config.cutePics.limit);
 });
-
-// const markovListener = fs.createWriteStream('./data/markov.txt', {flags: 'a'});
 
 bot.on('message', (msg) => parseMessages(msg));
 
 bot.on('error', e => console.error(e));
 
 bot.login(secret.botToken);
+
+function postPics(postChannel, postLimit) {
+  let channel = bot.channels.find('name', postChannel);
+  
+  if (postLimit > 0) {
+    try {
+      channel.sendMessage(`AXE CALLS TODAY'S TOP ${postLimit} FROM R/AWW TO BATTLE:`);
+      request.get(`https://www.reddit.com/r/aww/top.json?limit=${postLimit}&t=day`, (err, response, body) => {
+        if (err) { console.log (err); }
+        else {
+          let parsedData = JSON.parse(body);
+          parsedData.data.children.forEach((post) => {
+            channel.sendMessage(`${post.data.url}`);
+          });
+        }
+      });
+    }
+    catch (e) {
+      console.log(`There was an error ${e} posting to ${postChannel}`);
+    }
+  }
+}
 
 function parseMessages(msg) {
   if (!msg.author.bot) {
@@ -50,8 +72,5 @@ function parseMessages(msg) {
         msg.reply(`AXE CAN'T DO THAT! TRY **!help** TO SEE WHAT I CAN DO`);
       }
     }
-    // else {
-    //   markovListener.write(`${msg.content}\n`);
-    // }
   }
 }

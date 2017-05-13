@@ -24,6 +24,8 @@ module.exports = {
   dotaFeelings: [
     'DOTA IS A SHITTY GAME FOR ASSHOLES',
     'FUCK DOTA 2',
-    'DOTA IS AN UNWINNABLE GAME'
+    'DOTA IS AN UNWINNABLE GAME',
+    'DOTA KILLED MY CAT',
+    'DOTA IS THE REASON PIZZA HAS CALORIES'
   ]
 };
