@@ -11,7 +11,8 @@ const commands = utility.writeCommands();
 
 bot.on('ready', () => {
   console.log('AXE IS READY');
-  setInterval(postPics, 1000*60*60*24, Config.cutePics.channel, Config.cutePics.limit);
+  // sendRedditPosts();        // uncomment if you want to post on startup
+  setInterval(sendRedditPosts, 1000 * 60 * 60 * 24);
 });
 
 bot.on('message', (msg) => parseMessages(msg));
@@ -20,25 +21,31 @@ bot.on('error', e => console.error(e));
 
 bot.login(secret.botToken);
 
-function postPics(postChannel, postLimit) {
+function sendRedditPosts() {
+  postReddit('cute_animals', 'aww', 5, false);
+  postReddit('dota', 'dota2', 3, true);
+  postReddit('butts_and_dragons', 'dnd', 3, true);
+}
+
+function postReddit(postChannel, subReddit, postLimit, permalink) { // set permalink to TRUE to link to reddit post
   let channel = bot.channels.find('name', postChannel);
-  
-  if (postLimit > 0) {
-    try {
-      channel.sendMessage(`AXE CALLS TODAY'S TOP ${postLimit} FROM R/AWW TO BATTLE:`);
-      request.get(`https://www.reddit.com/r/aww/top.json?limit=${postLimit}&t=day`, (err, response, body) => {
-        if (err) { console.log (err); }
-        else {
-          let parsedData = JSON.parse(body);
-          parsedData.data.children.forEach((post) => {
+  try {
+    channel.sendMessage(`AXE CALLS TODAY'S TOP ${postLimit} FROM R/${subReddit.toUpperCase()} TO BATTLE:`);
+    request.get(`https://www.reddit.com/r/${subReddit}/top.json?limit=${postLimit}&t=day`, (err, response, body) => {
+      if (err) { console.log (err); }
+      else {
+        let parsedData = JSON.parse(body);
+        parsedData.data.children.forEach((post) => {
+          if (!permalink)
             channel.sendMessage(`${post.data.url}`);
-          });
-        }
-      });
-    }
-    catch (e) {
-      console.log(`There was an error ${e} posting to ${postChannel}`);
-    }
+          else
+            channel.sendMessage(`https://www.reddit.com${post.data.permalink}`);
+        });
+      }
+    });
+  }
+  catch (e) {
+    console.log(`There was an error ${e} posting to ${postChannel}`);
   }
 }
 
