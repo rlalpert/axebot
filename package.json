@@ -12,6 +12,7 @@
     "cleverbot.io": "^1.0.4",
     "discord.js": "^10.0.1",
     "request": "^2.78.0",
-    "roll": "^1.2.0"
+    "roll": "^1.2.0",
+    "steam-id-convertor": "^1.0.1"
   }
 }

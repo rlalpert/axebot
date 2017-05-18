@@ -12,7 +12,7 @@ const commands = utility.writeCommands();
 bot.on('ready', () => {
   console.log('AXE IS READY');
   // sendRedditPosts();        // uncomment if you want to post on startup
-  setInterval(sendRedditPosts, 1000 * 60 * 60 * 24);
+  // setInterval(sendRedditPosts, 1000 * 60 * 60 * 24);  
 });
 
 bot.on('message', (msg) => parseMessages(msg));
