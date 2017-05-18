@@ -87,7 +87,7 @@ module.exports = {
                             playerWin = 'Victory!';
                           }
                           else {
-                            playerWin = 'DEFAT';
+                            playerWin = 'DEFEAT';
                           }
 
                         msg.channel.sendMessage(`<http://www.dotabuff.com/matches/${match}> -- **${playerWin}**`);
