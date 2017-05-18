@@ -35,7 +35,7 @@ module.exports = {
         let info = JSON.parse(data);
         let steamId = info.steamid;
         try {
-          request.get(`https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=${steamDevKey}&account_id=${steamId}`, (err, response, body) => {
+          request.get(`https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=${steamDevKey}&account_id=${steamId}&matches_requested=5`, (err, response, body) => {
               console.log(`Steam response - ${response.statusCode}`);
               if (err) {
                 console.log(err);
@@ -45,7 +45,7 @@ module.exports = {
                 let results = parsedData.result.matches;
                 let steamId32 = convertor.to32(steamId);
 
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < results.length; i++) {
                   try {
                     let match = results[i].match_id;
 
