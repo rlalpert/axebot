@@ -45,6 +45,7 @@ module.exports = {
                 let results = parsedData.result.matches;
                 let steamId32 = convertor.to32(steamId);
 
+                try {
                 for (let i = 0; i < results.length; i++) {
                   try {
                     let match = results[i].match_id;
@@ -103,6 +104,10 @@ module.exports = {
                     msg.reply(`AXE COULDN'T GET YOUR MATCHES!`);
                     console.log(`Encountered error -- ${e} -- when attempting to retrieve matches for ${msg.author}`);
                   }
+                }               
+                }
+                catch (e) {
+                  console.log(`Encountered error -- ${e} -- when attempting to retrieve matches for ${msg.author}`);
                 }
               }
               else {
